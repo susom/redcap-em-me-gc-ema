@@ -55,7 +55,9 @@ class ProjMeGc extends \ExternalModules\AbstractExternalModule
             $d0_ema_date           = $setup['t0_ema_date'];
             $invite_offset_minutes = $setup['invite_offset_minutes'];
             $randomization         = $setup['randomization'];
-            $phone_number          = $setup['phone_number'];
+
+            // Clean up phone number
+            $phone_number          = preg_replace('/\D/','',$setup['phone_number']);
 
             // Build arrays to quickly loop through possible field/day combinations (this is very custom to project dict)
             $days    = array(1, 2, 3);
@@ -88,7 +90,7 @@ class ProjMeGc extends \ExternalModules\AbstractExternalModule
             $result = REDCap::saveData('json', json_encode(array($payload)), 'overwrite');
 
             if (empty($result['errors'])) {
-                $log[] = "AutoCalculated Start Times";
+                // $log[] = "AutoCalculated Start Times";
             } else {
                 $this->emError("Errors saving dates", $result);
             }
@@ -110,7 +112,9 @@ class ProjMeGc extends \ExternalModules\AbstractExternalModule
 
                         // Check if survey is already complete!
                         if (in_array($event_id, $completedEvents)) {
-                            $this->emDebug("Event $event_name is already complete");
+                            $msg = "$event_name already complete";
+                            $log[] = $msg;
+                            $this->emDebug($msg);
                             continue;
                         }
 
@@ -125,7 +129,9 @@ class ProjMeGc extends \ExternalModules\AbstractExternalModule
                         $message = self::SMS_PREFIX . $url;
                         $email_id = $this->insertRedcapSurveysEmail($survey_id, $message);
                         if ($email_id === false) {
-                            $this->emError("Error creating email_id for $field - $event_name - $event_id - $survey_id - $message");
+                            $msg = "Error creating email_id for $field - $event_name - $event_id - $survey_id - $message";
+                            $log[] = "Error creating email_id for $event_name";
+                            $this->emError($msg);
                             continue;
                         }
                         // $this->emDebug($email_id);
@@ -143,7 +149,7 @@ class ProjMeGc extends \ExternalModules\AbstractExternalModule
                         // Remove future email if already on queue (in case of change of date)
                         $result = $this->removeFromSurveyQueue($survey_id, $record, $event_id);
                         if ($result > 0) {
-                            $log[] = "Removed queued invitation for $survey_name in record $record in $event_name";
+                            $log[] = "Removed queued invitation in $event_name";
                         }
 
 
@@ -159,6 +165,7 @@ class ProjMeGc extends \ExternalModules\AbstractExternalModule
 
                             // Add it to the queue
                             $this->addToSurveyQueue($email_recip_id, $record, $scheduled_time_to_send);
+                            $log[] = "Scheduled $event_name for $scheduled_time_to_send";
                         }
                     }
                 }
@@ -168,7 +175,7 @@ class ProjMeGc extends \ExternalModules\AbstractExternalModule
         }
 
         // Log
-        if (!empty($log)) REDCap::logEvent(implode("\n",$log), "", "", $record, $event_id);
+        if (!empty($log)) REDCap::logEvent("ProjMeGc Update", implode("\n",$log), "", $record, $event_id);
     }
 
 
