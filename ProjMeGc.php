@@ -53,6 +53,7 @@ class ProjMeGc extends \ExternalModules\AbstractExternalModule
 
             // Get important field values
             $d0_ema_date           = $setup['t0_ema_date'];
+            $d0_dt_immutable       = new \DateTimeImmutable($d0_ema_date);
             $invite_offset_minutes = $setup['invite_offset_minutes'];
             $randomization         = $setup['randomization'];
 
@@ -61,7 +62,7 @@ class ProjMeGc extends \ExternalModules\AbstractExternalModule
 
             // Build arrays to quickly loop through possible field/day combinations (this is very custom to project dict)
             $days    = array(1, 2, 3);
-            $offsets = array('a' => "9:00", 'b' => "11:30", 'c' => "2:00");
+            $offsets = array('a' => "9:00", 'b' => "11:30", 'c' => "14:00");
             $tdays   = array(0, 1, 2);
 
             // Build data to upload to record setup
@@ -73,7 +74,9 @@ class ProjMeGc extends \ExternalModules\AbstractExternalModule
                             // skip t2 when randomization is not 1 (project-specific)
                             $dt = "";
                         } else {
-                            $dt = $d0_ema_date . " " . $this->getRandomTime($offset, $invite_offset_minutes);
+                            // Set day
+                            $this_date = $d0_dt_immutable->modify('+' . ($day-1) . 'days')->format("Y-m-d");
+                            $dt = $this_date . " " . $this->getRandomTime($offset, $invite_offset_minutes);
                         }
                         $data["t" . $t . "_ema_day" . $day . $o] = $dt;
                     }
