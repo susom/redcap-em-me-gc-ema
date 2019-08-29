@@ -75,7 +75,7 @@ class ProjMeGc extends \ExternalModules\AbstractExternalModule
                             $dt = "";
                         } else {
                             // Set day
-                            $this_date = $d0_dt_immutable->modify('+' . ($day-1) . 'days')->format("Y-m-d");
+                            $this_date = $d0_dt_immutable->modify('+' . ($day) . 'days')->format("Y-m-d");
                             $dt = $this_date . " " . $this->getRandomTime($offset, $invite_offset_minutes);
                         }
                         $data["t" . $t . "_ema_day" . $day . $o] = $dt;
@@ -318,12 +318,14 @@ class ProjMeGc extends \ExternalModules\AbstractExternalModule
         $dt = new \DateTime($startTime);
         $offset = $minuteOffset + $rand_minute;
 
-        $dt->add(new \DateInterval ('PT' . abs($offset) . 'M'));
+        $dt_int = new \DateInterval ('PT' . abs($offset) . 'M');
         if ($offset < 0) {
-            $dt->invert = 1; //Make it negative
+            $dt_int->invert = 1; //Make it negative
         }
+        $dt->add($dt_int);
 
-        //$this->emDebug($startTime . "+" . $minuteOffset . "+" . $rand_minute . " = " . $dt->format("H:i"));
+
+        //$this->emDebug("start + offset + random: ".$startTime . "+" . $minuteOffset . "+" . $rand_minute . " = " . $dt->format("H:i"));
         return $dt->format("H:i");
     }
 }
