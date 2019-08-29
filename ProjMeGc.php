@@ -317,8 +317,13 @@ class ProjMeGc extends \ExternalModules\AbstractExternalModule
         $rand_minute = rand(0,$randomMinuteWindow);
         $dt = new \DateTime($startTime);
         $offset = $minuteOffset + $rand_minute;
-        $dt->add(new \DateInterval ('PT' . $offset . 'M'));
-        // $this->emDebug($startTime . "+" . $minuteOffset . "+" . $rand_minute . " = " . $dt->format("H:i"));
+
+        $dt->add(new \DateInterval ('PT' . abs($offset) . 'M'));
+        if ($offset < 0) {
+            $dt->invert = 1; //Make it negative
+        }
+
+        //$this->emDebug($startTime . "+" . $minuteOffset . "+" . $rand_minute . " = " . $dt->format("H:i"));
         return $dt->format("H:i");
     }
 }
