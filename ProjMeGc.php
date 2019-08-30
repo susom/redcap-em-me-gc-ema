@@ -55,8 +55,19 @@ class ProjMeGc extends \ExternalModules\AbstractExternalModule
             if (!$auto_calc) return;
 
             // Get important field values
-            $d0_ema_date           = $setup['t0_ema_date'];
-            $d0_dt_immutable       = new \DateTimeImmutable($d0_ema_date);
+            // Day 1 Dates
+            $start_dates           = array(
+                0   => $setup['t0_ema_date'],
+                1   => $setup['t1_ema_date'],
+                2   => $setup['t2_ema_date']
+            );
+
+            // Build Day 1 dates into objects
+            $start_dates_dt = array();
+            foreach ($start_dates as $k=>$v) $start_dates_dt[$k] = new \DateTimeImmutable($v);
+
+            // $d0_ema_date           = $setup['t0_ema_date'];
+            // $d0_dt_immutable       = new \DateTimeImmutable($d0_ema_date);
             $invite_offset_minutes = $setup['invite_offset_minutes'];
             $randomization         = $setup['randomization'];
 
@@ -78,7 +89,8 @@ class ProjMeGc extends \ExternalModules\AbstractExternalModule
                             $dt = "";
                         } else {
                             // Set day
-                            $this_date = $d0_dt_immutable->modify('+' . ($day) . 'days')->format("Y-m-d");
+                            // $this_date = $d0_dt_immutable->modify('+' . ($day) . 'days')->format("Y-m-d");
+                            $this_date = $start_dates_dt[$t]->modify('+' . ($day) . 'days')->format("Y-m-d");
                             $dt = $this_date . " " . $this->getRandomTime($offset, $invite_offset_minutes);
                         }
                         $data["t" . $t . "_ema_day" . $day . $o] = $dt;
