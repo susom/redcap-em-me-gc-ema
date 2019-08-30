@@ -41,6 +41,10 @@ class ProjMeGc extends \ExternalModules\AbstractExternalModule
         try {
             $log = [];
 
+            $sms_prefix_day_1 = $this->getProjectSetting('day1-sms-prefix');
+            $sms_prefix_day_2 = $this->getProjectSetting('day2-sms-prefix');
+            $sms_prefix_day_3 = $this->getProjectSetting('day3-sms-prefix');
+
             // Get data from setup form
             $q       = REDCap::getData('json', array($record), null, array($event_id));
             $records = json_decode($q, true);
@@ -129,7 +133,9 @@ class ProjMeGc extends \ExternalModules\AbstractExternalModule
 
                         // Build the email_id with the SMS message
                         //$this->emDebug($field, $event_id, $event_name, $url);
-                        $message = self::SMS_PREFIX . $url;
+                        //$message2 = self::SMS_PREFIX . $url;
+                        //removing the $url (redcap already appends url)
+                        $message = ${"sms_prefix_day_".$day};
                         $email_id = $this->insertRedcapSurveysEmail($survey_id, $message);
                         if ($email_id === false) {
                             $msg = "Error creating email_id for $field - $event_name - $event_id - $survey_id - $message";
