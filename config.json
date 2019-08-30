@@ -50,20 +50,14 @@
       "type": "checkbox"
     },
     {
-      "key": "day1-sms-prefix",
-      "name": "<b>Text Message for day 1</b>",
+      "key": "sms-prefix-1a",
+      "name": "<b>Text Message for 1a</b>",
       "required": false,
       "type": "text"
     },
     {
-      "key": "day2-sms-prefix",
-      "name": "<b>Text Message for day 2</b>",
-      "required": false,
-      "type": "text"
-    },
-    {
-      "key": "day3-sms-prefix",
-      "name": "<b>Text Message for day 3</b>",
+      "key": "sms-prefix",
+      "name": "<b>Text Message for rest in series</b>",
       "required": false,
       "type": "text"
     }

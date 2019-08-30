@@ -41,9 +41,8 @@ class ProjMeGc extends \ExternalModules\AbstractExternalModule
         try {
             $log = [];
 
-            $sms_prefix_day_1 = $this->getProjectSetting('day1-sms-prefix');
-            $sms_prefix_day_2 = $this->getProjectSetting('day2-sms-prefix');
-            $sms_prefix_day_3 = $this->getProjectSetting('day3-sms-prefix');
+            $sms_prefix_1a = $this->getProjectSetting('sms-prefix-1a');
+            $sms_prefix    = $this->getProjectSetting('sms-prefix');
 
             // Get data from setup form
             $q       = REDCap::getData('json', array($record), null, array($event_id));
@@ -135,7 +134,11 @@ class ProjMeGc extends \ExternalModules\AbstractExternalModule
                         //$this->emDebug($field, $event_id, $event_name, $url);
                         //$message2 = self::SMS_PREFIX . $url;
                         //removing the $url (redcap already appends url)
-                        $message = ${"sms_prefix_day_".$day};
+                        if (($o == 'a') && ($day == 1)) {
+                            $message = $sms_prefix_1a;
+                        } else {
+                            $message = $sms_prefix;
+                        }
                         $email_id = $this->insertRedcapSurveysEmail($survey_id, $message);
                         if ($email_id === false) {
                             $msg = "Error creating email_id for $field - $event_name - $event_id - $survey_id - $message";
