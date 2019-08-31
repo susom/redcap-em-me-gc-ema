@@ -143,11 +143,18 @@ class ProjMeGc extends \ExternalModules\AbstractExternalModule
                         //$this->emDebug($field, $event_id, $event_name, $url);
                         //$message2 = self::SMS_PREFIX . $url;
                         //removing the $url (redcap already appends url)
+
+                        $this->emDebug("URL", $url);
+
                         if (($o == 'a') && ($day == 1)) {
                             $message = $sms_prefix_1a;
                         } else {
                             $message = $sms_prefix;
                         }
+                        $message2 = str_replace($message, "[survey-url]", $url);
+
+                        $this->emDebug($message,$message2);
+
                         $email_id = $this->insertRedcapSurveysEmail($survey_id, $message);
                         if ($email_id === false) {
                             $msg = "Error creating email_id for $field - $event_name - $event_id - $survey_id - $message";
