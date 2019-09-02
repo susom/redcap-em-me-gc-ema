@@ -50,14 +50,176 @@
       "type": "checkbox"
     },
     {
-      "key": "sms-prefix-1a",
-      "name": "<b>Text Message for 1a</b>",
+      "key": "sms-default",
+      "name": "<b>Default SMS Message for all texts</b><br>Use [survey-url] to insert custom url",
+      "required": true,
+      "type": "text"
+    },
+    {
+      "key": "desc-sms-overrides",
+      "name": "<b>You can override the default SMS messages below</b><br>Leave blank for default - use [survey-url] to insert custom url",
+      "required": false,
+      "type": "descriptive"
+    },
+    {
+      "key": "sms_0_1_a",
+      "name": "<b>Override for t0_d1_a</b>",
       "required": false,
       "type": "text"
     },
     {
-      "key": "sms-prefix",
-      "name": "<b>Text Message for rest in series</b>",
+      "key": "sms_0_1_b",
+      "name": "<b>Override for t0_d1_b</b>",
+      "required": false,
+      "type": "text"
+    },
+    {
+      "key": "sms_0_1_c",
+      "name": "<b>Override for t0_d1_c</b>",
+      "required": false,
+      "type": "text"
+    },
+    {
+      "key": "sms_0_2_a",
+      "name": "<b>Override for t0_d2_a</b>",
+      "required": false,
+      "type": "text"
+    },
+    {
+      "key": "sms_0_2_b",
+      "name": "<b>Override for t0_d2_b</b>",
+      "required": false,
+      "type": "text"
+    },
+    {
+      "key": "sms_0_2_c",
+      "name": "<b>Override for t0_d2_c</b>",
+      "required": false,
+      "type": "text"
+    },
+    {
+      "key": "sms_0_3_a",
+      "name": "<b>Override for t0_d3_a</b>",
+      "required": false,
+      "type": "text"
+    },
+    {
+      "key": "sms_0_3_b",
+      "name": "<b>Override for t0_d3_b</b>",
+      "required": false,
+      "type": "text"
+    },
+    {
+      "key": "sms_0_3_c",
+      "name": "<b>Override for t0_d3_c</b>",
+      "required": false,
+      "type": "text"
+    },
+    {
+      "key": "sms_1_1_a",
+      "name": "<b>Override for t1_d1_a</b>",
+      "required": false,
+      "type": "text"
+    },
+    {
+      "key": "sms_1_1_b",
+      "name": "<b>Override for t1_d1_b</b>",
+      "required": false,
+      "type": "text"
+    },
+    {
+      "key": "sms_1_1_c",
+      "name": "<b>Override for t1_d1_c</b>",
+      "required": false,
+      "type": "text"
+    },
+    {
+      "key": "sms_1_2_a",
+      "name": "<b>Override for t1_d2_a</b>",
+      "required": false,
+      "type": "text"
+    },
+    {
+      "key": "sms_1_2_b",
+      "name": "<b>Override for t1_d2_b</b>",
+      "required": false,
+      "type": "text"
+    },
+    {
+      "key": "sms_1_2_c",
+      "name": "<b>Override for t1_d2_c</b>",
+      "required": false,
+      "type": "text"
+    },
+    {
+      "key": "sms_1_3_a",
+      "name": "<b>Override for t1_d3_a</b>",
+      "required": false,
+      "type": "text"
+    },
+    {
+      "key": "sms_1_3_b",
+      "name": "<b>Override for t1_d3_b</b>",
+      "required": false,
+      "type": "text"
+    },
+    {
+      "key": "sms_1_3_c",
+      "name": "<b>Override for t1_d3_c</b>",
+      "required": false,
+      "type": "text"
+    },
+    {
+      "key": "sms_2_1_a",
+      "name": "<b>Override for t2_d1_a</b>",
+      "required": false,
+      "type": "text"
+    },
+    {
+      "key": "sms_2_1_b",
+      "name": "<b>Override for t2_d1_b</b>",
+      "required": false,
+      "type": "text"
+    },
+    {
+      "key": "sms_2_1_c",
+      "name": "<b>Override for t2_d1_c</b>",
+      "required": false,
+      "type": "text"
+    },
+    {
+      "key": "sms_2_2_a",
+      "name": "<b>Override for t2_d2_a</b>",
+      "required": false,
+      "type": "text"
+    },
+    {
+      "key": "sms_2_2_b",
+      "name": "<b>Override for t2_d2_b</b>",
+      "required": false,
+      "type": "text"
+    },
+    {
+      "key": "sms_2_2_c",
+      "name": "<b>Override for t2_d2_c</b>",
+      "required": false,
+      "type": "text"
+    },
+    {
+      "key": "sms_2_3_a",
+      "name": "<b>Override for t2_d3_a</b>",
+      "required": false,
+      "type": "text"
+    },
+    {
+      "key": "sms_2_3_b",
+      "name": "<b>Override for t2_d3_b</b>",
+      "required": false,
+      "type": "text"
+    },
+    {
+      "key": "sms_2_3_c",
+      "name": "<b>Override for t2_d3_c</b>",
       "required": false,
       "type": "text"
     }

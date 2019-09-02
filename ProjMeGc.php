@@ -41,9 +41,6 @@ class ProjMeGc extends \ExternalModules\AbstractExternalModule
         try {
             $log = [];
 
-            $sms_prefix_1a = $this->getProjectSetting('sms-prefix-1a');
-            $sms_prefix    = $this->getProjectSetting('sms-prefix');
-
             // Get data from setup form
             $q       = REDCap::getData('json', array($record), null, array($event_id));
             $records = json_decode($q, true);
@@ -51,7 +48,6 @@ class ProjMeGc extends \ExternalModules\AbstractExternalModule
 
             // Don't do anything if auto-calc isn't checked
             $auto_calc = $setup['auto_calc_schedule___1'];
-            // $this->emDebug($setup, $auto_calc);
             if (!$auto_calc) return;
 
             // Get important field values
@@ -115,6 +111,10 @@ class ProjMeGc extends \ExternalModules\AbstractExternalModule
             list($survey_id, $survey_name) = $this->getSurveyId( $project_id,self::SURVEY_NAME);
             // $this->emDebug($completedEvents, $survey_id);
 
+            // Get all project config settings to determine SMS format
+            $project_settings = $this->getProjectSettings();
+            $this->emDebug("Project_Settings", $project_settings);
+
             foreach ($tdays as $t) {
                 foreach ($offsets as $o => $offset) {
                     foreach ($days as $day) {
@@ -123,7 +123,6 @@ class ProjMeGc extends \ExternalModules\AbstractExternalModule
 
                         $event_name = $field . "_arm_1";
                         $event_id = REDCap::getEventIdFromUniqueEvent($event_name);
-
 
                         // Check if survey is already complete!
                         if (in_array($event_id, $completedEvents)) {
@@ -140,20 +139,11 @@ class ProjMeGc extends \ExternalModules\AbstractExternalModule
                         list($participant_id, $response_id) = $this->getParticipantAndResponseId($survey_id, $record, $event_id);
 
                         // Build the email_id with the SMS message
-                        //$this->emDebug($field, $event_id, $event_name, $url);
-                        //$message2 = self::SMS_PREFIX . $url;
-                        //removing the $url (redcap already appends url)
-
-                        $this->emDebug("URL", $url);
-
-                        if (($o == 'a') && ($day == 1)) {
-                            $message = $sms_prefix_1a;
-                        } else {
-                            $message = $sms_prefix;
-                        }
-                        $message2 = str_replace($message, "[survey-url]", $url);
-
-                        $this->emDebug($message,$message2);
+                        $key = "sms_{$t}_{$day}_{$o}";
+                        $message = empty($project_settings[$key]['value']) ? $project_settings['sms-default']['value'] : $project_settings[$key]['value'];
+                        // $this->emDebug("URL: " . $url, "Initial Message: " . $message);
+                        $message = str_replace( '[survey-url]', $url, $message);
+                        $this->emDebug("$key: $message");
 
                         $email_id = $this->insertRedcapSurveysEmail($survey_id, $message);
                         if ($email_id === false) {
