@@ -53,11 +53,11 @@
       "key": "sms-default",
       "name": "<b>Default SMS Message for all texts</b><br>Use [survey-url] to insert custom url",
       "required": true,
-      "type": "text"
+      "type": "textarea"
     },
     {
       "key": "desc-sms-overrides",
-      "name": "<b>You can override the default SMS messages below</b><br>Leave blank for default - use [survey-url] to insert custom url",
+      "name": "<b>SMS Message Customization by Event</b><br>You can replace the default SMS message above with a custom message by entering a value below.  Leave it blank for the default.  Be sure to include [survey-url] in the message",
       "required": false,
       "type": "descriptive"
     },
