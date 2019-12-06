@@ -1,14 +1,25 @@
 <?php
 /** @var \Stanford\ProjMeGc\ProjMeGc $module */
 
-
-
 echo "Hello";
 
 
+// This isn't used anymore - remove:
+
+/*
+      {
+        "name": "ME GC EMA",
+        "icon": "gear",
+        "url": "test.php"
+      }
+*/
+
+
+exit();
+
 $l = \ExternalModules\ExternalModules::getModuleInstance('em_logger');
 
-$l->log("test", array("line 11 of test.php", "banana"), "DEBUG");
+$l->emLogger("test", array("line 11 of test.php", "banana"), "DEBUG");
 
 function debug2($test) {
     // $p = \ExternalModules\ExternalModules::getModuleInstance('em_logger');
