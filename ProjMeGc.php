@@ -291,12 +291,14 @@ class ProjMeGc extends \ExternalModules\AbstractExternalModule
      * @return array
      */
     public function getCompletedSurveyEvents($record, $form_name) {
+        $data_table = method_exists('\REDCap', 'getDataTable') ? \REDCap::getDataTable(61) : "redcap_data";
+
         $sql = sprintf("
             select rsr.record, rsr.completion_time, rsp.event_id, rd.value as 'form_status' 
             from redcap_surveys_response rsr
             join redcap_surveys_participants rsp on rsr.participant_id = rsp.participant_id
             join redcap_surveys rs on rs.survey_id = rsp.survey_id
-            left outer join redcap_data rd on rd.project_id = rs.project_id and rd.record = rsr.record and rd.event_id = rsp.event_id and field_name = '%s_complete'
+            left outer join $data_table rd on rd.project_id = rs.project_id and rd.record = rsr.record and rd.event_id = rsp.event_id and field_name = '%s_complete'
             where
                 rs.project_id = 61
             and rs.form_name = '%s'
